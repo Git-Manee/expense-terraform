@@ -42,7 +42,7 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = aws_subnet.public_subnets[0].id
+  subnet_id     = aws_subnet.public_subnets.id
 
   tags = {
     Name = "${var.env}-ngw"
