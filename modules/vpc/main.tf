@@ -11,7 +11,7 @@ resource "aws_subnet" "public_subnets" {
   cidr_block = var.public_subnets[count.index]
   availability_zone = var.azs[count.index]
   tags = {
-    Name = "public-subnet-${count.index + 1}"
+    Name = "public-subnet-${count.index+1}"
   }
   }
 
@@ -21,7 +21,7 @@ resource "aws_subnet" "private_subnets" {
   cidr_block = var.private_subnets[count.index]
   availability_zone = var.azs[count.index]
   tags = {
-    Name = "private-subnet-${count.index + 1}"
+    Name = "private-subnet-${count.index+1}"
   }
 }
 
@@ -35,6 +35,9 @@ resource "aws_internet_gateway" "igw" {
 
 resource "aws_eip" "ngw" {
   domain   = "vpc"
+  tags = {
+    Name = "${var.env}-ngw"
+  }
 }
 
 resource "aws_nat_gateway" "ngw" {
