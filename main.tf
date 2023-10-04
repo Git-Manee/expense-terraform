@@ -45,7 +45,7 @@ module "frontend" {
 module "backend" {
   source = "./modules/app"
   app_port      = 8080
-  component     = "frontend"
+  component     = "backend"
   env           = var.env
   instance_type = "t3.micro"
   vpc_cidr      = var.vpc_cidr
