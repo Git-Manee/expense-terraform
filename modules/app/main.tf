@@ -38,7 +38,7 @@ resource "aws_launch_template" "template" {
   }
 }
 
-resource "aws_autoscalling_group" "asg" {
+resource "aws_autoscaling_group" "asg" {
   name               = "${var.env}-${var.component}"
   desired_capacity   = 1
   max_size           = 1
