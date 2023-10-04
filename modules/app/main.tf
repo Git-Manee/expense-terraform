@@ -11,6 +11,14 @@ resource "aws_security_group" "security_group" {
     cidr_blocks      = [var.vpc_cidr]
   }
 
+  ingress {
+    description      = "ssh"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = var.bastion_node_cidr
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
