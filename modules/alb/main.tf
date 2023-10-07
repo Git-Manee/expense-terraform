@@ -11,6 +11,14 @@ resource "aws_security_group" "security_group" {
     cidr_blocks      = [var.alb_sg_allow_cidr]
   }
 
+  ingress {
+    description      = "HTTPS"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = [var.alb_sg_allow_cidr]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -46,6 +54,20 @@ resource "aws_lb_listener" "listener-http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"   # want to forward to the target group
+    target_group_arn = var.tg_arn
+  }
+}
+
+resource "aws_lb_listener" "listener-https" { #This is only for the public Load balancer
+  count             = var.alb_type == "public" ? 1 : 0 #if the count = 1 it will run if 0 it won't run
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPs"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:145692951343:certificate/c5f26a95-0124-4a22-8256-30565483f02d"
 
   default_action {
     type             = "forward"   # want to forward to the target group
