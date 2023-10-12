@@ -65,7 +65,7 @@ resource "aws_lb_listener" "listener-https" { #This is only for the public Load 
   count             = var.alb_type == "public" ? 1 : 0 #if the count = 1 it will run if 0 it won't run
   load_balancer_arn = aws_lb.alb.arn
   port              = "443"
-  protocol          = "HTTPs"
+  protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = "arn:aws:acm:us-east-1:145692951343:certificate/c5f26a95-0124-4a22-8256-30565483f02d"
 
